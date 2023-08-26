@@ -2,13 +2,17 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
-import { UsersModule } from './users/users.module';
 import {
   ConfigurationKeyPaths,
   getConfiguration,
 } from './config/configuration';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { IdCard } from './entities/id-card.entity';
+import { User } from './entities/user.entity';
+import { Department } from './entities/department.entity';
+import { Employee } from './entities/employee.entity';
+import { Article } from './entities/article.entity';
+import { Tag } from './entities/tag.entity';
 
 // @Module({
 //   imports: [
@@ -50,6 +54,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           database: configService.get<string>('database.database'),
           timezone: configService.get('database.timezone'), // 时区
           logger: configService.get('database.logger'),
+          logging: configService.get('database.logging'),
           entities: configService.get('database.entities'),
           autoLoadEntities: configService.get<boolean>(
             'database.autoLoadEntities' as any,
@@ -59,7 +64,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       },
       inject: [ConfigService],
     }),
-    UsersModule,
+    TypeOrmModule.forFeature([
+      User,
+      IdCard,
+      Department,
+      Employee,
+      Article,
+      Tag,
+    ]),
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -17,7 +17,7 @@ export const getConfiguration = () =>
       // entities: [User],
       // autoLoadEntities: true,
       entities: [__dirname + '/../**/entities/*.entity.{ts,js}'],
-      synchronize: false,
+      synchronize: true,
       migrations: ['dist/migrations/**/*.js'],
       // cli: {
       //   migrationsDir: 'src/migrations', 不推荐
